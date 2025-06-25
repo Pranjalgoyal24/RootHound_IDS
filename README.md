@@ -47,6 +47,8 @@ Technologies used in the project:
 *   MITRE ATT&CK Framework Mapping
 *   psutil (Process Scanning)
 
+## 📁 Project Structure
+
 roothound/
 ├── app.py                     # Main Flask application to run the dashboard
 │
