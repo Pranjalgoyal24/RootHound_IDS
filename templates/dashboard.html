@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RootHound | System Intrusion Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #eef1f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+        }
+
+        .section h2 {
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 2px solid #dce3ea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #f5f7fa;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.5;
+            border-left: 4px solid #3b82f6;
+            word-wrap: break-word;
+        }
+
+        p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #999;
+            margin-right: 10px;
+            display: inline-block;
+            width: 160px;
+        }
+
+        .category {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        @media (max-width: 600px) {
+            .timestamp {
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>RootHound Intrusion Detection Dashboard</h1>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>Brute Force Detection</h2>
+        {% if alerts %}
+            <ul>
+            {% for alert in alerts %}
+                <li>
+                    Brute force detected from <b>{{ alert.ip }}</b> with <b>{{ alert.count }}</b> failed attempts.
+                    <ul>
+                        {% for t in alert.times %}
+                            <li class="timestamp">{{ t }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No brute force login attempts detected.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>USB Event Logs</h2>
+        {% if usb_logs %}
+            <ul>
+            {% for log in usb_logs %}
+                <li>{{ log }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No USB activity found in recent logs.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Suspicious Process Detection</h2>
+        {% if process_logs %}
+            <ul>
+            {% for log in process_logs %}
+                <li>{{ log }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No suspicious processes detected recently.</p>
+        {% endif %}
+    </div>
+<div class="section">
+    <h2>Mapped MITRE ATT&CK Techniques</h2>
+    {% if mitre_logs %}
+        <ul>
+        {% for entry in mitre_logs %}
+            <li>
+                <b>{{ entry.process }}</b> (PID: {{ entry.pid }}) — 
+                {{ entry.command }} <br>
+                <span class="timestamp">MITRE Technique:</span> {{ entry.technique }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No MITRE techniques detected in running processes.</p>
+    {% endif %}
+</div>
+
+    <div class="section">
+        <h2>System Activity Timeline</h2>
+        {% if timeline %}
+            <ul>
+            {% for category, time, log in timeline %}
+                <li>
+                    <span class="timestamp">{{ time.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+                    <span class="category">{{ category }}</span> - {{ log }}
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No timeline data available at this moment.</p>
+        {% endif %}
+    </div>
+
+</div>
+    <div class="section">
+    <h2>System Analysis Summary</h2>
+    {% if summary %}
+        <ul>
+        {% for line in summary %}
+            <li>{{ line }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No summary available.</p>
+    {% endif %}
+</div>
+
+
+</body>
+</html>
