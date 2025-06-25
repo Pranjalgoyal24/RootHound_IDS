@@ -49,19 +49,27 @@ Technologies used in the project:
 
 ## 📁 Project Structure
 
+```
 roothound/
 ├── app.py                     # Main Flask application to run the dashboard
-│
+
 ├── templates/
 │   └── dashboard.html         # Frontend dashboard UI for visualizing alerts and logs
-│
+
 ├── agent/
 │   ├── collect_logs.py        # Retrieves real-time Windows Event Logs (e.g., logon failures)
 │   ├── process_scanner.py     # Scans currently running system processes for suspicious behavior
 │   └── mitre_mapper.py        # Maps suspicious process names to MITRE ATT&CK techniques
-│
+
 ├── analyzer/
 │   ├── detect_intrusion.py    # Contains brute force detection logic from collected logs
 │   ├── process_analyzer.py    # Combines MITRE detection with process scanning
 │   ├── timeline.py            # Builds timeline of system activity and suspicious events
 │   └── summary_engine.py      # Generates a human-readable conclusion based on log analysis
+```
+
+> 📌 **Explanation**:
+- `agent/` – handles data collection from system logs and processes  
+- `analyzer/` – contains logic to analyze, detect intrusions, and generate reports  
+- `templates/` – contains the HTML structure of the dashboard  
+- `app.py` – integrates everything and runs the Flask web server  
