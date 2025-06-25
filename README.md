@@ -19,7 +19,8 @@ Here're some of the project's best features:
 <p>1. Clone the repository</p>
 
 ```
-git clone https://github.com/yourusername/roothound.git    cd roothound
+git clone https://github.com/yourusername/roothound.git
+cd roothound
 ```
 
 <p>2. Install dependencies</p>
@@ -31,7 +32,8 @@ pip install -r requirements.txt
 <p>3. Run the app</p>
 
 ```
-python app.py       Then open: http://127.0.0.1:5000 in your browser.
+python app.py
+Then open: http://127.0.0.1:5000 in your browser.
 ```
 
   
